@@ -7,9 +7,9 @@ Laukiamas rezultatas:
 Sukurtas veikiantis miestų vizualizacijos įrankis, t. y. IT sprendimas (žiniatinklio arba mobiliosios aplikacijos kodas) ar jo prototipas, kurį būtų galima  integruoti (paskelbti) Oficialiosios statistikos portale.
 
 Galimos temos:
-Geriausias miestas jaunimui gyventi;
-Sociodemografiniai ir socioekonominiai miestų skirtumai;
-Investuotojams patraukliausias miestas, remiantis socialinių ir ekonominių rodiklių analize;
-Tvariausias miestas;
-Žaliausi ir  švariausi miestai
+Geriausias miestas jaunimui gyventi; <br>
+Sociodemografiniai ir socioekonominiai miestų skirtumai;<br>
+Investuotojams patraukliausias miestas, remiantis socialinių ir ekonominių rodiklių analize;<br>
+Tvariausias miestas;<br>
+Žaliausi ir  švariausi miestai<br>
 
