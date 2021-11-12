@@ -50,9 +50,9 @@ def dataset_to_dataframe(link):
         if i["id"] == "DS_REGIONAL":
             if i["values"][0]["id"]=="N":
                 skip = True
-        if i["id"] == "DS_TIME_FORMAT":
-            if i["values"][0]["name"] not in ["Metai","Mokymo metai"]:
-                skip = True
+      #  if i["id"] == "DS_TIME_FORMAT":
+      #      if i["values"][0]["name"] not in ["Metai","Mokymo metai"]:
+      #          skip = True
     
     if not skip:
         dimensions_dict = {}
@@ -61,8 +61,8 @@ def dataset_to_dataframe(link):
             dimensions_dict[i["name"]] = i["keyPosition"]
 
             
-        if list(dimensions_dict.keys())[0] != "Administracinė teritorija":
-            return "This dataset has an unusual spatial dimension"
+      #  if list(dimensions_dict.keys())[0] != "Administracinė teritorija":
+       #     return "This dataset has an unusual spatial dimension"
         list_of_mappings = []
 
         for i in json_dict["structure"]["dimensions"]["observation"]:
@@ -100,31 +100,61 @@ def dataset_to_dataframe(link):
 
 
 
+#####
 
-table_names = ["Būsto kainų indekso svoriai"]
-table_names = ["Profesinio mokymo įstaigų skaičius"]
+
+table_names = ["Perdirbtos komunalinės atliekos","Aplinkosaugos ir aplinkai palankių prekių bendroji","Viešosios komunalinių atliekų tvarkymo",
+            "Teršalų, išmestų į aplinkos orą iš stacionarių taršos šaltinių","Ūkio, buities ir gamybos nuotekų išleidimas į paviršinius vandenis",
+              "Vandens sunaudojimas"]
 table_ids=get_dataset_ids(table_names)
 
 table_ids
 
 
+
+
 links=construct_links(table_ids)
 
 
-r = requests.get(links[0])
-json_dict = r.json()
-json_dict
+#r = requests.get(links[1])
+#json_dict = r.json()
+#json_dict
 
 
-df=dataset_to_dataframe(links[0])
-df
+
+df_list = []
+for i in links:
+    df_list.append(dataset_to_dataframe(i))
 
 
-df = df[df.iloc[:,2]==df.iloc[:,2].max()]
-df = df.iloc[:,[0,3]] 
 
-def to_json(df):
-    #print(json.loads(df.to_json(orient="split",index=False)))
-    print(json.loads(json.dumps(df.to_dict("list"))))
 
-to_json(df)
+
+
+
+###
+
+
+
+table_names = ["Nuolatinių gyventojų skaičius liepos 1 d."]
+table_ids=get_dataset_ids(table_names)
+
+links=construct_links(table_ids)
+
+population_df = dataset_to_dataframe(links[0])
+
+
+population_df = population_df[df.iloc[:,1] == "Miestas ir kaimas"].iloc[:,[0,3,4]]
+
+
+
+df_list2 = []
+for i in [0,1,3]:
+    x = pd.merge(df_list[0],population_df,on=["Laikotarpis","Administracinė teritorija"])
+    x["per_capita"]= x["Reikšmė_x"]/x["Reikšmė_y"]
+    df_list2.append(x)
+
+
+df_list2[0].to_pickle("nuoteku_isvalimas.pkl")
+df_list2[1].to_pickle("vandens_panaudojimas.pkl")
+df_list2[2].to_pickle("tersalai.pkl")

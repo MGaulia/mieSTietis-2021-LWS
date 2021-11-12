@@ -3,9 +3,9 @@ CO2 emissions kaip tik nera (galbut turi kitas saltinis)
 
 Water
 
-N3003V	Total use of water - m³
+N3003V	Total use of water - m³ ok
 
-	EN3011V	Share of the urban waste water load (in population equivalents) treated according to the applicable standard -%
+EN3011V	Share of the urban waste water load (in population equivalents) treated according to the applicable standard -%
 
 
 
@@ -25,7 +25,7 @@ Air quality
 
 Waste 
 
-EN4008V	Municipal waste generated (domestic and commercial), total - 1000 t
+EN4008V	Municipal waste generated (domestic and commercial), total - 1000 t ok
 
 
 
@@ -36,8 +36,8 @@ Transport
 
 TT1010V	Share of journeys to work by public transport (rail, metro, bus, tram) -%
 	TT1007V	Share of journeys to work by bicycle -%
-	TT1008V	Share of journeys to work by foot -%
-TT1079V	Length of bicycle network (dedicated cycle paths and lanes) - km -> reiktu dalinti is miesto dydzio
+	TT1008V	Share of journeys to work by foot -% 
+TT1079V	Length of bicycle network (dedicated cycle paths and lanes) ok
 
 
 
