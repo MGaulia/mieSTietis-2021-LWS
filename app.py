@@ -9,6 +9,7 @@ def safe_div(x,y):
     if y == 0:
         return 0
     return x / y
+
 def form_json_by_city(filepath, lastyear = False, change = False):
     data = pd.read_csv(filepath)
 
@@ -52,10 +53,6 @@ def form_json_by_city(filepath, lastyear = False, change = False):
 app = Flask(__name__)
 CORS(app)
 api = Api(app)
-"""
-        KATEGORIJOS
-"""
-
 
 """
         NORMAL
@@ -112,6 +109,11 @@ class total(Resource):
     def get(self):
         return form_json_by_city("kpi/total.csv")
 
+class kpi(Resource):
+    def get(self):
+        return form_json_by_city("kpi/kpi.csv")
+
+
 api.add_resource(nuotekos, '/nuotekos')
 api.add_resource(kelioniu_kiekis, '/kelioniu_kiekis')
 api.add_resource(tersalai_co, '/tersalai_co')
@@ -125,6 +127,8 @@ api.add_resource(transportas, '/transportas')
 api.add_resource(oras, '/oras')
 api.add_resource(siuksles, '/siuksles')
 api.add_resource(total, '/total')
+api.add_resource(kpi, '/kpi')
+
 """
         LAST-YEAR
 """
