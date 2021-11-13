@@ -1,11 +1,15 @@
 from flask import Flask, jsonify
 from flask_restful import Resource, Api
+from flask_cors import CORS
 import pandas as pd
 
+
 app = Flask(__name__)
+CORS(app)
 api = Api(app)
 
-nuotekos = pd.read_csv("nuotekos.csv")
+nuotekos = pd.read_csv("csv/nuotekos.csv")
+#nuotekos = pd.read_pickle('/csv/nuoteku_isvalimas.pkl.csv')
 nuotekos = nuotekos.drop(['Rodiklis', "Matavimo vienetai"], 1)
 nuotekos = nuotekos.replace("Sostinės regionas", "Vilniaus apskiritis")
 nuotekos = pd.merge(
@@ -15,7 +19,6 @@ nuotekos = pd.merge(
 nuotekos["y"] = nuotekos["Reikšmė_y"]/nuotekos["Reikšmė_x"]
 nuotekos = nuotekos.drop(['Išvalymas_x', "Išvalymas_y", "Reikšmė_x", "Reikšmė_y"], 1)
 nuotekos = nuotekos.rename({'Laikotarpis': 'x', 'Administracinė teritorija': 'city'}, axis=1)
-nuotekos
 
 class population_by_cities(Resource):
     def get(self):
@@ -24,4 +27,4 @@ class population_by_cities(Resource):
 api.add_resource(population_by_cities, '/nuotekos')  # www.linktoapi.com/populations
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug = True)
