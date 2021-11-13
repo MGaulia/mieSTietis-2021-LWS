@@ -109,3 +109,40 @@ for i in df_list[1:]:
 ranked = rank(final)
 
 ranked.to_pickle("kpi.pkl")
+
+
+
+
+
+
+###
+
+
+def rank(dataframe):
+    #cities = ["Vilnius","Kaunas","Alytus","Šiauliai","Marijampolė","Klaipeda","Siauliai","Panevezys"]
+    #where=dataframe.city.isin(cities)
+    small_good = [1,2,6,7]
+    for i,j in enumerate(dataframe):
+        if i in small_good:
+            dataframe[j] = dataframe[j].rank(method="min",ascending = True)
+        elif i > 0:
+            dataframe[j] = dataframe[j].rank(method="min",ascending = True)
+    #dataframe = dataframe[where]
+    return dataframe
+
+ranked = rank(final)
+
+
+ranked["waste"]=ranked.iloc[:,1:4].apply(sum,axis=1)
+ranked["greenery"]=ranked.iloc[:,4:6].apply(sum,axis=1)
+ranked["transport"]=ranked.iloc[:,6:].apply(sum,axis=1)
+
+
+for i in [9,10,11]:
+        ranked.iloc[:,i] = ranked.iloc[:,i].rank(method="min",ascending = True)
+        ranked.iloc[:,i] = ranked.iloc[:,i].rank(method="min",ascending = True)
+ranked = ranked.iloc[:,[0,9,10,11]]
+
+
+
+ranked.to_pickle("category_ranks.pkl")
