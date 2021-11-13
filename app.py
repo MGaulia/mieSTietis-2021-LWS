@@ -1,8 +1,14 @@
+from __future__ import division
 from flask import Flask, jsonify
 from flask_restful import Resource, Api
 from flask_cors import CORS
 import pandas as pd
+import numpy as np
 
+def safe_div(x,y):
+    if y == 0:
+        return 0
+    return x / y
 def form_json_by_city(filepath, lastyear = False, change = False):
     data = pd.read_csv(filepath)
 
@@ -17,7 +23,8 @@ def form_json_by_city(filepath, lastyear = False, change = False):
             data[data["x"] == year1],
             data[data["x"] == year2],
             on=["city"])
-        data["y_change"] = round(100*round(data["y_x"]/data["y_y"] - 1,5),3)
+        data["y_change"] = round(100*round(data["y_x"]/data["y_y"] - 1,5),1)
+        data["y_change"] = data["y_change"].replace(np.inf, 0)
         data["y_lastyear"] = data["y_x"]
         data = data.drop(["x_x", "y_x", "x_y", "y_y"], 1)
         result = {}
