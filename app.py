@@ -11,12 +11,14 @@ def form_json_by_city(filepath, lastyear = False, change = False):
             data[data["x"] == 2020],
             data[data["x"] == 2019],
             on=["city"])
-        data["y"] = round(100*round(data["y_x"]/data["y_y"] - 1,5),3)
+        data["y_change"] = round(100*round(data["y_x"]/data["y_y"] - 1,5),3)
+        data["y_lastyear"] = data["y_x"]
         data = data.drop(["x_x", "y_x", "x_y", "y_y"], 1)
         result = {}
         for city in set(data["city"]):
             temp = data[data["city"] == city]
-            result[city] = [{"y":y} for y in  temp.y]
+            result[city] = [{"y_lastyear":yly, "y_change": yc} for yly, yc in  zip(temp.y_lastyear, temp.y_change)]
+
         return result
 
     if lastyear:
