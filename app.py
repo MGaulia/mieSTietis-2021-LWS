@@ -11,7 +11,7 @@ def form_json_by_city(filepath, lastyear = False, change = False):
             data[data["x"] == 2020],
             data[data["x"] == 2019],
             on=["city"])
-        data["y_change"] = round(100*round(data["y_x"]/data["y_y"] - 1,5),3)
+        data["y_change"] = round(100*round(data["y_x"]/data["y_y"] - 1,5),1)
         data["y_lastyear"] = data["y_x"]
         data = data.drop(["x_x", "y_x", "x_y", "y_y"], 1)
         result = {}
