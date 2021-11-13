@@ -7,9 +7,15 @@ def form_json_by_city(filepath, lastyear = False, change = False):
     data = pd.read_csv(filepath)
 
     if change == True:
+        if 2020 not in data.x:
+            year1 = 2019
+            year2 = 2018
+        else:
+            year1 = 2020
+            year2 = 2019
         data = pd.merge(
-            data[data["x"] == 2020],
-            data[data["x"] == 2019],
+            data[data["x"] == year1],
+            data[data["x"] == year2],
             on=["city"])
         data["y_change"] = round(100*round(data["y_x"]/data["y_y"] - 1,5),3)
         data["y_lastyear"] = data["y_x"]
@@ -22,7 +28,12 @@ def form_json_by_city(filepath, lastyear = False, change = False):
         return result
 
     if lastyear:
-        data = data[data["x"] == 2020]
+        if 2020 not in data.x:
+            year = 2019
+        else:
+            year = 2020
+
+        data = data[data["x"] == year]
 
     result = {}
     for city in set(data["city"]):
@@ -86,6 +97,10 @@ class oras(Resource):
     def get(self):
         return form_json_by_city("kpi/oras.csv")
 
+class siuksles(Resource):
+    def get(self):
+        return form_json_by_city("kpi/siuksles.csv")
+
 class total(Resource):
     def get(self):
         return form_json_by_city("kpi/total.csv")
@@ -101,6 +116,7 @@ api.add_resource(viesojo_rida, '/viesojo_rida')
 api.add_resource(vanduo, '/vanduo')
 api.add_resource(transportas, '/transportas')
 api.add_resource(oras, '/oras')
+api.add_resource(siuksles, '/siuksles')
 api.add_resource(total, '/total')
 """
         LAST-YEAR
@@ -149,6 +165,10 @@ class oras_lastyear(Resource):
     def get(self):
         return form_json_by_city("kpi/oras.csv", lastyear= True)
 
+class siuksles_lastyear(Resource):
+    def get(self):
+        return form_json_by_city("kpi/siuksles.csv", lastyear= True)
+
 class total_lastyear(Resource):
     def get(self):
         return form_json_by_city("kpi/total.csv", lastyear= True)
@@ -164,6 +184,7 @@ api.add_resource(viesojo_rida_lastyear, '/viesojo_rida_lastyear')
 api.add_resource(vanduo_lastyear, '/vanduo_lastyear')
 api.add_resource(transportas_lastyear, '/transportas_lastyear')
 api.add_resource(oras_lastyear, '/oras_lastyear')
+api.add_resource(siuksles_lastyear, '/siuksles_lastyear')
 api.add_resource(total_lastyear, '/total_lastyear')
 """
         CHANGE
@@ -212,6 +233,10 @@ class oras_change(Resource):
     def get(self):
         return form_json_by_city("kpi/oras.csv", change= True)
 
+class siuksles_change(Resource):
+    def get(self):
+        return form_json_by_city("kpi/siuksles.csv", change= True)
+
 class total_change(Resource):
     def get(self):
         return form_json_by_city("kpi/total.csv", change= True)
@@ -227,6 +252,7 @@ api.add_resource(viesojo_rida_change, '/viesojo_rida_change')
 api.add_resource(vanduo_change, '/vanduo_change')
 api.add_resource(transportas_change, '/transportas_change')
 api.add_resource(oras_change, '/oras_change')
+api.add_resource(siuksles_change, '/siuksles_change')
 api.add_resource(total_change, '/total_change')
 
 if __name__ == '__main__':
