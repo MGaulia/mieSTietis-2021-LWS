@@ -26,8 +26,8 @@ def form_json_by_city(filepath, lastyear = False, change = False):
 
     result = {}
     for city in set(data["city"]):
-        temp = data[data["city"] == city]
-        result[city] = [{"x":x, "y":y} for x,y in zip(temp.x, temp.y)]
+        temp = data[data["city"] == city].to_dict(orient = "list")
+        result[city] = {"x":temp["x"], "y":temp["y"]}
 
     return result
 
