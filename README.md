@@ -1,7 +1,7 @@
 # LWS
-https://osp.stat.gov.lt/hakatonas-miestietis
+https://osp.stat.gov.lt/hakatonas-miestietis <br>
 
-TEMA: GREEN CITY INDEX
-Y skaičiavimai:
-Nuotekos - 100*"Išleista išvalytų iki normos nuotekų"/"Iš viso išleista nuotekų"
-Metalo laužas - "Juodųjų metalų laužas, tūkst. tonų" + "Spalvotųjų metalų laužas, tonos"
+TEMA: GREEN CITY INDEX <br>
+Y skaičiavimai: <br>
+Nuotekos - 100*"Išleista išvalytų iki normos nuotekų"/"Iš viso išleista nuotekų" <br>
+Metalo laužas - "Juodųjų metalų laužas, tūkst. tonų" + "Spalvotųjų metalų laužas, tonos" <br>
