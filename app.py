@@ -88,6 +88,10 @@ class vandens_energetikai(Resource):
 class viesojo_rida(Resource):
     def get(self):
         return form_json_by_city("kpi/viesojo_rida.csv")
+    
+class siuksles_surinktos(Resource):
+    def get(self):
+        return form_json_by_city("kpi/siuksles_surinktos.csv")
 
 class vanduo(Resource):
     def get(self):
@@ -122,6 +126,7 @@ api.add_resource(tersalai_kietosios, '/tersalai_kietosios')
 api.add_resource(vandens_buiciai, '/vandens_buiciai')
 api.add_resource(vandens_energetikai, '/vandens_energetikai')
 api.add_resource(viesojo_rida, '/viesojo_rida')
+api.add_resource(viesojo_rida, '/siuksles_surinktos')
 api.add_resource(vanduo, '/vanduo')
 api.add_resource(transportas, '/transportas')
 api.add_resource(oras, '/oras')
@@ -164,6 +169,12 @@ class viesojo_rida_lastyear(Resource):
     def get(self):
         return form_json_by_city("kpi/viesojo_rida.csv", lastyear= True)
 
+
+class siuksles_surinktos_lastyear(Resource):
+    def get(self):
+        return form_json_by_city("kpi/siuksles_surinktos.csv", lastyear= True)
+
+
 class vanduo_lastyear(Resource):
     def get(self):
         return form_json_by_city("kpi/vanduo.csv", lastyear= True)
@@ -192,6 +203,7 @@ api.add_resource(tersalai_kietosios_lastyear, '/tersalai_kietosios_lastyear')
 api.add_resource(vandens_buiciai_lastyear, '/vandens_buiciai_lastyear')
 api.add_resource(vandens_energetikai_lastyear, '/vandens_energetikai_lastyear')
 api.add_resource(viesojo_rida_lastyear, '/viesojo_rida_lastyear')
+api.add_resource(siuksles_surinktos_lastyear, '/siuksles_surinktos_lastyear')
 api.add_resource(vanduo_lastyear, '/vanduo_lastyear')
 api.add_resource(transportas_lastyear, '/transportas_lastyear')
 api.add_resource(oras_lastyear, '/oras_lastyear')
@@ -232,6 +244,11 @@ class viesojo_rida_change(Resource):
     def get(self):
         return form_json_by_city("kpi/viesojo_rida.csv", change= True)
 
+class siuksles_surinktos_change(Resource):
+    def get(self):
+        return form_json_by_city("kpi/siuksles_surinktos.csv", change= True)
+
+
 class vanduo_change(Resource):
     def get(self):
         return form_json_by_city("kpi/vanduo.csv", change= True)
@@ -260,6 +277,7 @@ api.add_resource(tersalai_kietosios_change, '/tersalai_kietosios_change')
 api.add_resource(vandens_buiciai_change, '/vandens_buiciai_change')
 api.add_resource(vandens_energetikai_change, '/vandens_energetikai_change')
 api.add_resource(viesojo_rida_change, '/viesojo_rida_change')
+api.add_resource(siuksles_surinktos_change, '/siuksles_sirinktos_change')
 api.add_resource(vanduo_change, '/vanduo_change')
 api.add_resource(transportas_change, '/transportas_change')
 api.add_resource(oras_change, '/oras_change')
