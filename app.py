@@ -284,7 +284,7 @@ api.add_resource(transportas_lastyear, '/transportas_lastyear')
 api.add_resource(oras_lastyear, '/oras_lastyear')
 api.add_resource(siuksles_lastyear, '/siuksles_lastyear')
 api.add_resource(total_lastyear, '/total_lastyear')
-api.add_resource(total_lastyear, '/kpi_lastyear')
+api.add_resource(kpi_lastyear, '/kpi_lastyear')
 
 
 """
@@ -359,7 +359,7 @@ api.add_resource(transportas_change, '/transportas_change')
 api.add_resource(oras_change, '/oras_change')
 api.add_resource(siuksles_change, '/siuksles_change')
 api.add_resource(total_change, '/total_change')
-api.add_resource(total_change, '/kpi_change')
+api.add_resource(kpi_change, '/kpi_change')
 
 if __name__ == '__main__':
     app.run(debug = True)
