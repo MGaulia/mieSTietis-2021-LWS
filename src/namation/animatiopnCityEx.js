@@ -9,7 +9,7 @@ import ExpandButton from "./expandButton";
 
 
 
-const AnimationCity = (props) => {
+const AnimationCityEx = (props) => {
     const [city, setCity] = useState(props.thisCity)
     const miestai = ["Vilnius","Kaunas","Klaipėda","Šiauliai","Panevėžys","Alytus"]
     console.log(city)
@@ -85,12 +85,10 @@ const AnimationCity = (props) => {
         }
     }
     return(
-        <div style={{position:"absolute", zIndex:"10"}}>
-            <div style={{position:"absolute", zIndex:"10", marginTop:"150px", }}>
-                <ExpandButton expand={props.expand} expandCityPanel={props.expandCityPanel}></ExpandButton>
-            </div>
+        <div style={{position:"absolute", zIndex:"10", marginTop:"40px"}}>
             
-            <div style={{width:"400px",position:"absolute", display:"flex", justifyContent:"space-between", marginTop:"400px"}}>
+            
+            <div style={{width:"400px",position:"absolute", display:"flex", justifyContent:"space-between", marginTop:"100px"}}>
             <div  onClick={()=> arrowL()}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-arrow-down-left" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M2 13.5a.5.5 0 0 0 .5.5h6a.5.5 0 0 0 0-1H3.707L13.854 2.854a.5.5 0 0 0-.708-.708L3 12.293V7.5a.5.5 0 0 0-1 0v6z"/>
@@ -104,7 +102,7 @@ const AnimationCity = (props) => {
             </div>
             
             {/* miesto pavadinimas */}
-            <div style={{position:"absolute", zIndex:"10", marginTop:"300px", marginLeft:"120px"}}>
+            <div style={{position:"absolute", zIndex:"10", marginTop:"0px", marginLeft:"120px"}}>
             <div style={{width:"100%", textAlign:"center",fontSize:"30px"}}>
                 {city}
             </div>
@@ -115,4 +113,4 @@ const AnimationCity = (props) => {
     )
 }
 
-export default AnimationCity
+export default AnimationCityEx

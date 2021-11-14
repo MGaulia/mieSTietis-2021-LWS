@@ -25,7 +25,7 @@ const SelectedCityMain = (props) => {
             <FourIcons thisCity={props.thisCity} changeParam={changeParam}></FourIcons>
             <hr className="" style={dividerStyle} ></hr>
             <Apibud param={param} thisCity={props.thisCity}></Apibud>
-            
+            <hr className="" style={dividerStyle} ></hr>
         </div>
     )
 }
@@ -40,7 +40,7 @@ const Apibud = (props) => {
 
     const render =() => {
         return(
-            <div>
+            <div style={{height:"280px"}}>
                 <div>
                 parametrų paaiškinimas apie
             </div>
