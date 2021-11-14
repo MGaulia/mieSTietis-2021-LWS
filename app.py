@@ -81,6 +81,7 @@ def extract_categories(weights):
     total = cat[["city","total","x"]]
     total = total.rename({'total': 'y'}, axis=1)
     total.to_csv("kpi/total.csv", index = False)
+    total.to_csv("kpi/kpi.csv", index = False)
     
 """
         CUSTOM
