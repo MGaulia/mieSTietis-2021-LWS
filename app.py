@@ -11,7 +11,7 @@ def safe_div(x,y):
         return 0
     return x / y
 
-def form_json_by_city(filepath, lastyear = False, change = False):
+def form_json_by_city(filepath, change = False):
     data = pd.read_csv(filepath)
 
     if change == True:
@@ -37,13 +37,6 @@ def form_json_by_city(filepath, lastyear = False, change = False):
 
         return result
 
-    if lastyear:
-        if 2020 not in data.x:
-            year = 2019
-        else:
-            year = 2020
-
-        data = data[data["x"] == year]
 
     result = {}
     for city in set(data["city"]):
@@ -64,7 +57,7 @@ def extract_categories(weights):
     cat = cat.round(2)
 
     cat.to_csv("kpi/categories_2.csv")
-    
+
     iscores = pd.read_csv("kpi/indicators_scores.csv")
 
     trans = [2,10]
@@ -74,20 +67,17 @@ def extract_categories(weights):
     categories = [trans,water,air,trash]
     for i,j in zip(categories,weights):
         iscores.iloc[:,i] = iscores.iloc[:,i] * j / 25 * 100 / sum(weights)
-   
+
     iscores = iscores.round(2)
     iscores.to_csv("kpi/indicator_scores_2.csv")
-    
-    
-    
+
     df_ranks = cat.copy()
     df_ranks.iloc[:,2:] = df_ranks.iloc[:,1:].groupby("x").rank(ascending=False)
     df_ranks = df_ranks[df_ranks["x"] == 2020]
     df_ranks = df_ranks[["city", "total"]]
     df_ranks = df_ranks.rename({"total":"y"}, axis = 1)
     df_ranks.to_csv("kpi/totalranks.csv")
-    
-    
+
     vanduo = cat[["city","vanduo","x"]]
     vanduo = vanduo.rename({'vanduo': 'y'}, axis=1)
     vanduo.to_csv("kpi/vanduo.csv", index = False)
@@ -108,17 +98,18 @@ def extract_categories(weights):
     total = total.rename({'total': 'y'}, axis=1)
     total.to_csv("kpi/total.csv", index = False)
     total.to_csv("kpi/kpi.csv", index = False)
-    
+
 """
         CUSTOM
 """
 weights = [25, 25, 25, 25]
 extract_categories(weights)
+
 class updateweights(Resource):
     def post(self):
         w = request.args.get('text', default=0, type=int)
         strw = str(w)
-        weights = [int(strw[:2]), int(strw[2:4]), int(strw[4:6]), int(strw[6:9]) ]
+        weights = [int(strw[:2]), int(strw[2:4]), int(strw[4:6]), int(strw[6:8]) ]
         extract_categories(weights)
         return 200
 
@@ -127,7 +118,7 @@ api.add_resource(updateweights, '/uw')
 class lycatbar(Resource):
     def get(self):
         data = pd.read_csv("kpi/categories_2.csv")
-        data["šiukšles"] = list(data[data["x"] == 2019]["šiukšles"])*6
+        #data["šiukšles"] = list(data[data["x"] == 2019]["šiukšles"])*6
         data = data[data["x"] == 2020]
         data = data[["city", "transportas", "vanduo", "oras", "šiukšles"]]
         cols = [col for col in data.columns if col not in ["city", "x"]]
@@ -219,7 +210,7 @@ class siuksles(Resource):
 class total(Resource):
     def get(self):
         return form_json_by_city("kpi/total.csv")
-    
+
 class kpi(Resource):
     def get(self):
         return form_json_by_city("kpi/kpi.csv")
@@ -240,81 +231,6 @@ api.add_resource(oras, '/oras')
 api.add_resource(siuksles, '/siuksles')
 api.add_resource(total, '/total')
 api.add_resource(kpi, '/kpi')
-
-"""
-        LAST-YEAR
-"""
-class nuotekos_lastyear(Resource):
-    def get(self):
-        return form_json_by_city("kpi/nuotekos.csv", lastyear= True)
-
-class kelioniu_kiekis_lastyear(Resource):
-    def get(self):
-        return form_json_by_city("kpi/kelioniu_kiekis.csv", lastyear= True)
-
-class tersalai_co_lastyear(Resource):
-    def get(self):
-        return form_json_by_city("kpi/oro_tersalai_co.csv", lastyear= True)
-
-class tersalai_no_lastyear(Resource):
-    def get(self):
-        return form_json_by_city("kpi/oro_tersalai_no.csv", lastyear= True)
-
-class tersalai_kietosios_lastyear(Resource):
-    def get(self):
-        return form_json_by_city("kpi/oro_tersalai_kietosios.csv", lastyear= True)
-
-class vandens_buiciai_lastyear(Resource):
-    def get(self):
-        return form_json_by_city("kpi/vandens_sunaudojimas_buiciai.csv", lastyear= True)
-
-class vandens_pozeminis_lastyear(Resource):
-    def get(self):
-        return form_json_by_city("kpi/vandens_sunaudojimas_pozeminis.csv", lastyear= True)
-
-class viesojo_rida_lastyear(Resource):
-    def get(self):
-        return form_json_by_city("kpi/viesojo_rida.csv", lastyear= True)
-
-class vanduo_lastyear(Resource):
-    def get(self):
-        return form_json_by_city("kpi/vanduo.csv", lastyear= True)
-
-class transportas_lastyear(Resource):
-    def get(self):
-        return form_json_by_city("kpi/transportas.csv", lastyear= True)
-
-class oras_lastyear(Resource):
-    def get(self):
-        return form_json_by_city("kpi/oras.csv", lastyear= True)
-
-class siuksles_lastyear(Resource):
-    def get(self):
-        return form_json_by_city("kpi/siuksles.csv", lastyear= True)
-
-class total_lastyear(Resource):
-    def get(self):
-        return form_json_by_city("kpi/total.csv", lastyear= True)
-    
-class kpi_lastyear(Resource):
-    def get(self):
-        return form_json_by_city("kpi/kpi.csv", lastyear= True)
-
-api.add_resource(nuotekos_lastyear, '/nuotekos_lastyear')
-api.add_resource(kelioniu_kiekis_lastyear, '/kelioniu_kiekis_lastyear')
-api.add_resource(tersalai_co_lastyear, '/tersalai_co_lastyear')
-api.add_resource(tersalai_no_lastyear, '/tersalai_no')
-api.add_resource(tersalai_kietosios_lastyear, '/tersalai_kietosios_lastyear')
-api.add_resource(vandens_buiciai_lastyear, '/vandens_buiciai_lastyear')
-api.add_resource(vandens_pozeminis_lastyear, '/vandens_pozeminis_lastyear')
-api.add_resource(viesojo_rida_lastyear, '/viesojo_rida_lastyear')
-api.add_resource(vanduo_lastyear, '/vanduo_lastyear')
-api.add_resource(transportas_lastyear, '/transportas_lastyear')
-api.add_resource(oras_lastyear, '/oras_lastyear')
-api.add_resource(siuksles_lastyear, '/siuksles_lastyear')
-api.add_resource(total_lastyear, '/total_lastyear')
-api.add_resource(kpi_lastyear, '/kpi_lastyear')
-
 
 """
         CHANGE
@@ -370,7 +286,7 @@ class siuksles_change(Resource):
 class total_change(Resource):
     def get(self):
         return form_json_by_city("kpi/total.csv", change= True)
-    
+
 class kpi_change(Resource):
     def get(self):
         return form_json_by_city("kpi/kpi.csv", change= True)
