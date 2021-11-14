@@ -61,7 +61,33 @@ def extract_categories(weights):
 
     cat.iloc[:,[2,3,4,5]] = cat.iloc[:,[2,3,4,5]] * pd.Series(weights,index = cat.columns[[2,3,4,5]]) / 25 * 100 / sum(weights)
     cat["total"]= cat.iloc[:,[2,3,4,5]].sum(axis=1)
+    cat = cat.round(2)
 
+    cat.to_csv("kpi/categories_2.csv")
+    
+    iscores = pd.read_csv("kpi/indicators_scores.csv")
+
+    trans = [2,10]
+    water = [3,8,9]
+    air = [4,5,6]
+    trash = [7]
+    categories = [trans,water,air,trash]
+    for i,j in zip(categories,weights):
+        iscores.iloc[:,i] = iscores.iloc[:,i] * j / 25 * 100 / sum(weights)
+   
+    iscores = iscores.round(2)
+    iscores.to_csv("kpi/indicator_scores_2.csv")
+    
+    
+    
+    df_ranks = cat.copy()
+    df_ranks.iloc[:,2:] = df_ranks.iloc[:,1:].groupby("x").rank(ascending=False)
+    df_ranks = df_ranks[df_ranks["x"] == 2020]
+    df_ranks = df_ranks[["city", "total"]]
+    df_ranks = df_ranks.rename({"total":"y"}, axis = 1)
+    df_ranks.to_csv("kpi/totalranks.csv")
+    
+    
     vanduo = cat[["city","vanduo","x"]]
     vanduo = vanduo.rename({'vanduo': 'y'}, axis=1)
     vanduo.to_csv("kpi/vanduo.csv", index = False)
@@ -100,6 +126,11 @@ api.add_resource(updateweights, '/uw')
 
 class lycatbar(Resource):
     def get(self):
+        data = pd.read_csv("kpi/categories_2.csv")
+        data["šiukšles"] = list(data[data["x"] == 2019]["šiukšles"])*6
+        data = data[data["x"] == 2020]
+        data = data[["city", "transportas", "vanduo", "oras", "šiukšles"]]
+
         data = pd.read_csv("kpi/lycatbar.csv")
         cols = [col for col in data.columns if col not in ["city", "x"]]
         result = {}
@@ -125,7 +156,7 @@ api.add_resource(totalranks, '/totalranks')
 
 class indicator_scores(Resource):
     def get(selfs):
-        iscores = pd.read_csv("kpi/indicators_scores.csv")
+        iscores = pd.read_csv("kpi/indicators_scores_2.csv")
         iscores["siuksles_surinktos"] = list(iscores[iscores["x"] == 2019]["siuksles_surinktos"])*6
         iscores = iscores[iscores["x"] == 2020]
         cols = [col for col in iscores.columns if col not in ["city","x"]]
