@@ -54,10 +54,10 @@ app = Flask(__name__)
 CORS(app)
 api = Api(app)
 
-"""
-        NORMAL
-"""
 
+"""
+        CUSTOM
+"""
 class totalranks(Resource):
     def get(self):
         data = pd.read_csv("kpi/totalranks.csv")
@@ -69,6 +69,22 @@ class totalranks(Resource):
 
 api.add_resource(totalranks, '/totalranks')
 
+class indicator_scores(Resource):
+    def get(selfs):
+        iscores = pd.read_csv("kpi/indicators_scores.csv")
+        iscores["siuksles_surinktos"] = list(iscores[iscores["x"] == 2019]["siuksles_surinktos"])*6
+        iscores = iscores[iscores["x"] == 2020]
+        cols = [col for col in iscores.columns if col not in ["city","x"]]
+        result = {}
+        for city in iscores.city:
+            result[city] = [{col:list(iscores[iscores["city"] == city].loc[:,col])[0]} for col in cols]
+        return result
+
+api.add_resource(indicator_scores, '/indicator_scores')
+
+"""
+        NORMAL
+"""
 class nuotekos(Resource):
     def get(self):
         return form_json_by_city("kpi/nuotekos.csv")
