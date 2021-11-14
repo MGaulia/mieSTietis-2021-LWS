@@ -1,0 +1,22 @@
+Vanduo:
+
+Ūkio, buities ir gamybos nuotekų išleidimas į paviršinius vandenis : 
+	išviso išleista nuotekų / išvalyta nuotekų %
+
+Vandens sunaudojimas tūkst m3 1000 gyventojų: 
+	Sunaudota vandens ūkio ir buities reikmėms
+	sunaudota požeminio vandens
+
+
+
+
+Oras:
+
+Į atmosferą išmestų teršalų kiekis:
+
+
+Anglies monoksidas, tūkst. tonų 1000 gyventojų
+
+Bendrosios suspenduotos kietosios dalelės, tūkst. tonų 1000 gyventojų
+
+Azoto oksidai, tūkst. tonų 1000 gyventojų
