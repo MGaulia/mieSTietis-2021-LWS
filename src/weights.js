@@ -26,9 +26,9 @@ const Weights =(props) =>{
             console.log("Request complete! response:", res);
           });
     }
-    const style1 = {width:"40px"}
+    const style1 = {width:"40px", marginRight:"10px"}
     return(
-        <div style={{width:"200px", backgroundColor:"white"}}>
+        <div style={{width:"400px", backgroundColor:""}}>
             <div >
                 <input style={style1} onChange={(x) => setVanduo(x.target.value)}>
 
@@ -43,7 +43,7 @@ const Weights =(props) =>{
 
                 </input>
                 
-                <Button style={{color:"black", backgroundColor:"white", borderColor:"black"}} onClick={() =>find()}> Search</Button>
+                <Button style={{color:"black", backgroundColor:"white", borderColor:"black"}} onClick={() =>find()}> Keisti svorius</Button>
             </div>
         </div>
     )
