@@ -64,7 +64,10 @@ class lycatbar(Resource):
         cols = [col for col in data.columns if col not in ["city", "x"]]
         result = {}
         for city in data.city:
-            result[city] = [{col:list(data[data["city"] == city].loc[:,col])[0]} for col in cols]
+            temp = {}
+            for col in cols:
+                temp[col] = list(data[data["city"] == city].loc[:,col])[0]
+            result[city] = temp
         return result
 
 api.add_resource(lycatbar, '/catbar')
