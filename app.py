@@ -4,6 +4,7 @@ from flask_restful import Resource, Api
 from flask_cors import CORS
 import pandas as pd
 import numpy as np
+from flask import request
 
 def safe_div(x,y):
     if y == 0:
@@ -14,7 +15,7 @@ def form_json_by_city(filepath, lastyear = False, change = False):
     data = pd.read_csv(filepath)
 
     if change == True:
-        if 2020 not in data.x:
+        if filepath == "kpi/siuksles.csv":
             year1 = 2019
             year2 = 2018
         else:
@@ -24,7 +25,7 @@ def form_json_by_city(filepath, lastyear = False, change = False):
             data[data["x"] == year1],
             data[data["x"] == year2],
             on=["city"])
-        data["y_change"] = round(100*round(data["y_x"]/data["y_y"] - 1,5),1)
+        data["y_change"] = round(100*round((data["y_x"]/data["y_y"]).replace({ np.inf  : 0}) - 1,5),1)
         data["y_change"] = data["y_change"].replace(np.inf, 0)
         data["y_lastyear"] = data["y_x"]
         data = data.drop(["x_x", "y_x", "x_y", "y_y"], 1)
@@ -54,10 +55,47 @@ app = Flask(__name__)
 CORS(app)
 api = Api(app)
 
+def extract_categories(weights):
+    cat = pd.read_csv("kpi/categories.csv")
 
+    cat.iloc[:,[2,3,4,5]] = cat.iloc[:,[2,3,4,5]] * pd.Series(weights,index = cat.columns[[2,3,4,5]]) / 25 * 100 / sum(weights)
+    cat["total"]= cat.iloc[:,[2,3,4,5]].sum(axis=1)
+
+    vanduo = cat[["city","vanduo","x"]]
+    vanduo = vanduo.rename({'vanduo': 'y'}, axis=1)
+    vanduo.to_csv("kpi/vanduo.csv", index = False)
+
+    transportas = cat[["city","transportas","x"]]
+    transportas = transportas.rename({'transportas': 'y'}, axis=1)
+    transportas.to_csv("kpi/transportas.csv", index = False)
+
+    oras = cat[["city","oras","x"]]
+    oras = oras.rename({'oras': 'y'}, axis=1)
+    oras.to_csv("kpi/oras.csv", index = False)
+
+    siuksles = cat[["city","šiukšles","x"]]
+    siuksles = siuksles.rename({'šiukšles': 'y'}, axis=1)
+    siuksles = siuksles[siuksles["x"] < 2020]
+    siuksles.to_csv("kpi/siuksles.csv", index = False)
+
+    total = cat[["city","total","x"]]
+    total = total.rename({'total': 'y'}, axis=1)
+    total.to_csv("kpi/total.csv", index = False)
 """
         CUSTOM
 """
+weights = [25, 25, 25, 25]
+extract_categories(weights)
+class updateweights(Resource):
+    def post(self):
+        w = request.args.get('text', default=0, type=int)
+        strw = str(w)
+        weights = [int(strw[:2]), int(strw[2:4]), int(strw[4:6]), int(strw[6:9]) ]
+        extract_categories(weights)
+        return 200
+
+api.add_resource(updateweights, '/uw')
+
 class lycatbar(Resource):
     def get(self):
         data = pd.read_csv("kpi/lycatbar.csv")
