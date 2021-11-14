@@ -1,5 +1,6 @@
 import React,{useEffect, useState} from "react";
 import Test from "../../test";
+import Weights from "../../weights";
 
 const SelectedCityMain = (props) => {
     const [city, setCity] = useState(props.thisCity)
@@ -26,6 +27,7 @@ const SelectedCityMain = (props) => {
             <hr className="" style={dividerStyle} ></hr>
             <Apibud param={param} thisCity={props.thisCity}></Apibud>
             <hr className="" style={dividerStyle} ></hr>
+            <Weights></Weights>
         </div>
     )
 }
@@ -54,6 +56,7 @@ const Apibud = (props) => {
         render()
     )
 }
+
 
 const FourIcons = (props) => {
     const [vanduo, setVanduo] = useState({y_lastyear:0,y_change:0})
