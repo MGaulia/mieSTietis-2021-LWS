@@ -9,9 +9,10 @@ const CityAnimationEx = (props) => {
             <ExpandButton expand={props.expand} expandCityPanel={props.expandCityPanel}></ExpandButton>
         </div>
         {/* Grafiko pavadinimas */}
-        <div className="" style={{textAlign: "center", fontSize:"30px"}}>Pradėkime nuo savo miesto</div>
+        {props.expand?null:<div><div className="" style={{textAlign: "center", fontSize:"30px"}}>Pradėkime nuo savo miesto</div>
+        <div className="" style={{textAlign: "center", fontSize:"15px"}}>Ekologinių miestų rodiklių vizualizacija</div></div>
+        }
         {/* sub pavadinimas */}
-        <div className="" style={{textAlign: "center", fontSize:"15px"}}>Ekologinių miestų rodiklių vizualizacija</div>
         <div style={{marginTop:"auto"}}>
             <AnimationCity thisCity={props.thisCity} selectCity={props.selectCity}></AnimationCity>
         </div>
