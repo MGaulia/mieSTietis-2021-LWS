@@ -4,8 +4,8 @@ Vanduo:
 	išviso išleista nuotekų / išvalyta nuotekų %
 
 Vandens sunaudojimas tūkst m3 1000 gyventojų: 
-	Sunaudota vandens ūkio ir buities reikmėms
-	sunaudota požeminio vandens
+	Sunaudota vandens ūkio ir buities reikmėms.
+	Sunaudota požeminio vandens.
 
 
 
@@ -15,8 +15,24 @@ Oras:
 Į atmosferą išmestų teršalų kiekis:
 
 
-Anglies monoksidas, tūkst. tonų 1000 gyventojų
+Anglies monoksidas, tūkst. tonų 1000 gyventojų.
 
-Bendrosios suspenduotos kietosios dalelės, tūkst. tonų 1000 gyventojų
+Bendrosios suspenduotos kietosios dalelės, tūkst. tonų 1000 gyventojų.
 
-Azoto oksidai, tūkst. tonų 1000 gyventojų
+Azoto oksidai, tūkst. tonų 1000 gyventojų.
+
+
+
+
+Transportas:
+
+Autobusų rida tūkst. km 1000 gyventojų.
+
+Vidutiniškai vienam gyventojui tenka kelionių autobusais vnt.
+
+
+
+
+Šiukšlės:
+
+Buitinės šiukšlės 1000 tonų 1000 gyventojų.
