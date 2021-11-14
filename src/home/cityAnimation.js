@@ -5,8 +5,8 @@ const CityAnimation = (props) => {
 
 
     return(
-    <div style={{height:"600px",  marginTop: "10px", marginBottom:"10px", display:"flex",flexDirection: "column"}}>
-        <div style={{position:"absolute", marginTop:"275px"}}>
+    <div style={{height:"670px",  marginTop: "10px", marginBottom:"10px", display:"flex",flexDirection: "column"}}>
+        <div style={{position:"absolute", marginTop:"320px"}}>
             <ExpandButton expand={props.expand} expandCityPanel={props.expandCityPanel}></ExpandButton>
         </div>
         {/* Grafiko pavadinimas */}

@@ -2,7 +2,7 @@ import React,{useState} from "react"
 
 const AnimationCity = (props) => {
     const [city, setCity] = useState(props.thisCity)
-    const miestai = ["Vilnius","Kaunas","Klaipėda","Šauliai","Panevėžys","Alytus"]
+    const miestai = ["Vilnius","Kaunas","Klaipėda","Šiauliai","Panevėžys","Alytus"]
     console.log(city)
     const arrowR = () => {
         let index = miestai.indexOf(city)
