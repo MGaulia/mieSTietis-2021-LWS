@@ -56,7 +56,7 @@ def extract_categories(weights):
     cat["total"]= cat.iloc[:,[2,3,4,5]].sum(axis=1)
     cat = cat.round(2)
 
-    cat.to_csv("kpi/categories_2.csv")
+    cat.to_csv("kpi/categories_2.csv", index = False)
 
     iscores = pd.read_csv("kpi/indicators_scores.csv")
 
@@ -69,14 +69,14 @@ def extract_categories(weights):
         iscores.iloc[:,i] = iscores.iloc[:,i] * j / 25 * 100 / sum(weights)
 
     iscores = iscores.round(2)
-    iscores.to_csv("kpi/indicators_scores_2.csv")
+    iscores.to_csv("kpi/indicators_scores_2.csv", index = False)
 
     df_ranks = cat.copy()
     df_ranks.iloc[:,2:] = df_ranks.iloc[:,1:].groupby("x").rank(ascending=False)
     df_ranks = df_ranks[df_ranks["x"] == 2020]
     df_ranks = df_ranks[["city", "total"]]
     df_ranks = df_ranks.rename({"total":"y"}, axis = 1)
-    df_ranks.to_csv("kpi/totalranks.csv")
+    df_ranks.to_csv("kpi/totalranks.csv", index = False)
 
     vanduo = cat[["city","vanduo","x"]]
     vanduo = vanduo.rename({'vanduo': 'y'}, axis=1)
