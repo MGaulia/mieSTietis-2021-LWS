@@ -66,8 +66,6 @@ api = Api(app)
 class totalranks(Resource):
     def get(self):
         data = pd.read_csv("kpi/categories.csv")
-        weights = [float(i) for i in request.args["weights"].split("-")]
-        data.iloc[:,[2,3,4,5]] = df.iloc[:,[2,3,4,5]] * pd.Series(weights,index = df_list[0].columns[[2,3,4,5]]) / 25 * 100 / sum(weights)
         result = {}
         for city in set(data["city"]):
             temp = data[data["city"] == city].to_dict(orient = "list")
