@@ -69,7 +69,7 @@ def extract_categories(weights):
         iscores.iloc[:,i] = iscores.iloc[:,i] * j / 25 * 100 / sum(weights)
 
     iscores = iscores.round(2)
-    iscores.to_csv("kpi/indicator_scores_2.csv")
+    iscores.to_csv("kpi/indicators_scores_2.csv")
 
     df_ranks = cat.copy()
     df_ranks.iloc[:,2:] = df_ranks.iloc[:,1:].groupby("x").rank(ascending=False)
