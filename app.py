@@ -1,5 +1,5 @@
 from __future__ import division
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_restful import Resource, Api
 from flask_cors import CORS
 import pandas as pd
@@ -10,8 +10,13 @@ def safe_div(x,y):
         return 0
     return x / y
 
+
+
+
+
 def form_json_by_city(filepath, lastyear = False, change = False):
     data = pd.read_csv(filepath)
+
 
     if change == True:
         if 2020 not in data.x:
@@ -60,7 +65,9 @@ api = Api(app)
 """
 class totalranks(Resource):
     def get(self):
-        data = pd.read_csv("kpi/totalranks.csv")
+        data = pd.read_csv("kpi/categories.csv")
+        weights = [float(i) for i in request.args["weights"].split("-")]
+        data.iloc[:,[2,3,4,5]] = df.iloc[:,[2,3,4,5]] * pd.Series(weights,index = df_list[0].columns[[2,3,4,5]]) / 25 * 100 / sum(weights)
         result = {}
         for city in set(data["city"]):
             temp = data[data["city"] == city].to_dict(orient = "list")
