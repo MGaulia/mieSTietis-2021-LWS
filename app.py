@@ -1,5 +1,5 @@
 from __future__ import division
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify
 from flask_restful import Resource, Api
 from flask_cors import CORS
 import pandas as pd
@@ -10,13 +10,8 @@ def safe_div(x,y):
         return 0
     return x / y
 
-
-
-
-
 def form_json_by_city(filepath, lastyear = False, change = False):
     data = pd.read_csv(filepath)
-
 
     if change == True:
         if 2020 not in data.x:
@@ -63,9 +58,20 @@ api = Api(app)
 """
         CUSTOM
 """
+class lycatbar(Resource):
+    def get(self):
+        data = pd.read_csv("kpi/lycatbar.csv")
+        cols = [col for col in data.columns if col not in ["city", "x"]]
+        result = {}
+        for city in data.city:
+            result[city] = [{col:list(data[data["city"] == city].loc[:,col])[0]} for col in cols]
+        return result
+
+api.add_resource(lycatbar, '/catbar')
+
 class totalranks(Resource):
     def get(self):
-        data = pd.read_csv("kpi/categories.csv")
+        data = pd.read_csv("kpi/totalranks.csv")
         result = {}
         for city in set(data["city"]):
             temp = data[data["city"] == city].to_dict(orient = "list")
@@ -114,9 +120,9 @@ class vandens_buiciai(Resource):
     def get(self):
         return form_json_by_city("kpi/vandens_sunaudojimas_buiciai.csv")
 
-class vandens_pozeminis(Resource):
+class vandens_energetikai(Resource):
     def get(self):
-        return form_json_by_city("kpi/vandens_sunaudojimas_pozeminis.csv")
+        return form_json_by_city("kpi/vandens_sunaudojimas_energetikai.csv")
 
 class viesojo_rida(Resource):
     def get(self):
@@ -153,7 +159,7 @@ api.add_resource(tersalai_co, '/tersalai_co')
 api.add_resource(tersalai_no, '/tersalai_no')
 api.add_resource(tersalai_kietosios, '/tersalai_kietosios')
 api.add_resource(vandens_buiciai, '/vandens_buiciai')
-api.add_resource(vandens_pozeminis, '/vandens_pozeminis')
+api.add_resource(vandens_energetikai, '/vandens_energetikai')
 api.add_resource(viesojo_rida, '/viesojo_rida')
 api.add_resource(vanduo, '/vanduo')
 api.add_resource(transportas, '/transportas')
@@ -189,9 +195,9 @@ class vandens_buiciai_lastyear(Resource):
     def get(self):
         return form_json_by_city("kpi/vandens_sunaudojimas_buiciai.csv", lastyear= True)
 
-class vandens_pozeminis_lastyear(Resource):
+class vandens_energetikai_lastyear(Resource):
     def get(self):
-        return form_json_by_city("kpi/vandens_sunaudojimas_pozeminis.csv", lastyear= True)
+        return form_json_by_city("kpi/vandens_sunaudojimas_energetikai.csv", lastyear= True)
 
 class viesojo_rida_lastyear(Resource):
     def get(self):
@@ -223,7 +229,7 @@ api.add_resource(tersalai_co_lastyear, '/tersalai_co_lastyear')
 api.add_resource(tersalai_no_lastyear, '/tersalai_no')
 api.add_resource(tersalai_kietosios_lastyear, '/tersalai_kietosios_lastyear')
 api.add_resource(vandens_buiciai_lastyear, '/vandens_buiciai_lastyear')
-api.add_resource(vandens_pozeminis_lastyear, '/vandens_pozeminis_lastyear')
+api.add_resource(vandens_energetikai_lastyear, '/vandens_energetikai_lastyear')
 api.add_resource(viesojo_rida_lastyear, '/viesojo_rida_lastyear')
 api.add_resource(vanduo_lastyear, '/vanduo_lastyear')
 api.add_resource(transportas_lastyear, '/transportas_lastyear')
@@ -257,9 +263,9 @@ class vandens_buiciai_change(Resource):
     def get(self):
         return form_json_by_city("kpi/vandens_sunaudojimas_buiciai.csv", change= True)
 
-class vandens_pozeminis_change(Resource):
+class vandens_energetikai_change(Resource):
     def get(self):
-        return form_json_by_city("kpi/vandens_sunaudojimas_pozeminis.csv", change= True)
+        return form_json_by_city("kpi/vandens_sunaudojimas_energetikai.csv", change= True)
 
 class viesojo_rida_change(Resource):
     def get(self):
@@ -291,7 +297,7 @@ api.add_resource(tersalai_co_change, '/tersalai_co_change')
 api.add_resource(tersalai_no_change, '/tersalai_no_change')
 api.add_resource(tersalai_kietosios_change, '/tersalai_kietosios_change')
 api.add_resource(vandens_buiciai_change, '/vandens_buiciai_change')
-api.add_resource(vandens_pozeminis_change, '/vandens_pozeminis_change')
+api.add_resource(vandens_energetikai_change, '/vandens_energetikai_change')
 api.add_resource(viesojo_rida_change, '/viesojo_rida_change')
 api.add_resource(vanduo_change, '/vanduo_change')
 api.add_resource(transportas_change, '/transportas_change')
