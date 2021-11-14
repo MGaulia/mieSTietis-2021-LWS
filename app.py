@@ -25,8 +25,9 @@ def form_json_by_city(filepath, lastyear = False, change = False):
             data[data["x"] == year1],
             data[data["x"] == year2],
             on=["city"])
-        data["y_change"] = round(100*round((data["y_x"]/data["y_y"]).replace({ np.inf  : 0}) - 1,5),1)
+        data["y_change"] = round(100*round((data["y_x"]/data["y_y"])- 1,2),1)
         data["y_change"] = data["y_change"].replace(np.inf, 0)
+        data["y_change"] = data["y_change"].replace(np.nan, 0)
         data["y_lastyear"] = data["y_x"]
         data = data.drop(["x_x", "y_x", "x_y", "y_y"], 1)
         result = {}
@@ -84,8 +85,8 @@ def extract_categories(weights):
 """
         CUSTOM
 """
-#weights = [25, 25, 25, 25]
-#extract_categories(weights)
+weights = [25, 25, 25, 25]
+extract_categories(weights)
 class updateweights(Resource):
     def post(self):
         w = request.args.get('text', default=0, type=int)
