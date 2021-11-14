@@ -81,6 +81,7 @@ def extract_categories(weights):
     total = cat[["city","total","x"]]
     total = total.rename({'total': 'y'}, axis=1)
     total.to_csv("kpi/total.csv", index = False)
+    
 """
         CUSTOM
 """
@@ -188,6 +189,10 @@ class siuksles(Resource):
 class total(Resource):
     def get(self):
         return form_json_by_city("kpi/total.csv")
+    
+class kpi(Resource):
+    def get(self):
+        return form_json_by_city("kpi/kpi.csv")
 
 
 
@@ -204,6 +209,7 @@ api.add_resource(transportas, '/transportas')
 api.add_resource(oras, '/oras')
 api.add_resource(siuksles, '/siuksles')
 api.add_resource(total, '/total')
+api.add_resource(kpi, '/kpi')
 
 """
         LAST-YEAR
@@ -259,6 +265,10 @@ class siuksles_lastyear(Resource):
 class total_lastyear(Resource):
     def get(self):
         return form_json_by_city("kpi/total.csv", lastyear= True)
+    
+class kpi_lastyear(Resource):
+    def get(self):
+        return form_json_by_city("kpi/kpi.csv", lastyear= True)
 
 api.add_resource(nuotekos_lastyear, '/nuotekos_lastyear')
 api.add_resource(kelioniu_kiekis_lastyear, '/kelioniu_kiekis_lastyear')
@@ -273,6 +283,9 @@ api.add_resource(transportas_lastyear, '/transportas_lastyear')
 api.add_resource(oras_lastyear, '/oras_lastyear')
 api.add_resource(siuksles_lastyear, '/siuksles_lastyear')
 api.add_resource(total_lastyear, '/total_lastyear')
+api.add_resource(total_lastyear, '/kpi_lastyear')
+
+
 """
         CHANGE
 """
@@ -327,6 +340,10 @@ class siuksles_change(Resource):
 class total_change(Resource):
     def get(self):
         return form_json_by_city("kpi/total.csv", change= True)
+    
+class kpi_change(Resource):
+    def get(self):
+        return form_json_by_city("kpi/kpi.csv", change= True)
 
 api.add_resource(nuotekos_change, '/nuotekos_change')
 api.add_resource(kelioniu_kiekis_change, '/kelioniu_kiekis_change')
@@ -341,6 +358,7 @@ api.add_resource(transportas_change, '/transportas_change')
 api.add_resource(oras_change, '/oras_change')
 api.add_resource(siuksles_change, '/siuksles_change')
 api.add_resource(total_change, '/total_change')
+api.add_resource(total_change, '/kpi_change')
 
 if __name__ == '__main__':
     app.run(debug = True)
