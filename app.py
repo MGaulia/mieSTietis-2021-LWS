@@ -130,8 +130,6 @@ class lycatbar(Resource):
         data["šiukšles"] = list(data[data["x"] == 2019]["šiukšles"])*6
         data = data[data["x"] == 2020]
         data = data[["city", "transportas", "vanduo", "oras", "šiukšles"]]
-
-        data = pd.read_csv("kpi/lycatbar.csv")
         cols = [col for col in data.columns if col not in ["city", "x"]]
         result = {}
         for city in data.city:
