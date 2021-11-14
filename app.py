@@ -102,8 +102,6 @@ def extract_categories(weights):
 """
         CUSTOM
 """
-weights = [25, 25, 25, 25]
-extract_categories(weights)
 
 class updateweights(Resource):
     def post(self):
@@ -305,6 +303,9 @@ api.add_resource(oras_change, '/oras_change')
 api.add_resource(siuksles_change, '/siuksles_change')
 api.add_resource(total_change, '/total_change')
 api.add_resource(kpi_change, '/kpi_change')
+
+weights = [25, 25, 25, 25]
+extract_categories(weights)
 
 if __name__ == '__main__':
     app.run(debug = True)
