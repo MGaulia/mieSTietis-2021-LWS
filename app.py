@@ -84,8 +84,8 @@ def extract_categories(weights):
 """
         CUSTOM
 """
-weights = [25, 25, 25, 25]
-extract_categories(weights)
+#weights = [25, 25, 25, 25]
+#extract_categories(weights)
 class updateweights(Resource):
     def post(self):
         w = request.args.get('text', default=0, type=int)
