@@ -20,7 +20,7 @@ def form_json_by_city(data, change = False):
         
         test=pd.merge(data[data["x"]==2020],data[data["x"]==2019],on="city")
         
-        if all(test["total_x"] == test["total_y"]):
+        if all(test["y_x"] == test["y_y"]):
             year1 = 2019
             year2 = 2018
         else:
@@ -75,7 +75,7 @@ def extract_category(weights):
     global total_data
     
 
-    iscores = pd.read_csv("kpi/indicators_scores.csv")
+    iscores_data = pd.read_csv("kpi/indicator_scores.csv")
     
     trans = [2,10]
     water = [3,8,9]
@@ -84,20 +84,17 @@ def extract_category(weights):
     categories = [trans,water,air,trash]
     
     for i,j in zip(categories,weights):
-        iscores.iloc[:,i] = iscores.iloc[:,i] * j / 25 * 100 / sum(weights)
-    iscores = iscores.round(2)
-    
-    iscores.to_csv("kpi/indicatos_scores_2.csv", index = False)
-    
-    
-    category_data = iscores.copy()
+        iscores_data.iloc[:,i] = iscores_data.iloc[:,i] * j / 25 * 100 / sum(weights)
+    iscores_data = iscores_data.round(2)
+        
+    category_data = iscores_data.copy()
     for i,j in enumerate(categories):
          category_data["cat"+str(i)]=category_data.iloc[:,j].sum(axis=1)
          
     category_dict = {"cat0":"transportas","cat1":"vanduo","cat2":"oras","cat3":"šiukšles"}
     category_data = category_data.rename(columns=category_dict).round(1)
     indices = [0,1]
-    indices.extend(list(range(len(iscores.columns),len(iscores.columns)+len(categories)+1)))
+    indices.extend(list(range(len(iscores_data.columns),len(iscores_data.columns)+len(categories)+1)))
     category_data["total"]= category_data.iloc[:,[2,3,4,5]].sum(axis=1)
     category_data = category_data.iloc[:,indices]
 
@@ -320,7 +317,7 @@ api.add_resource(siuksles_change, '/siuksles_change')
 api.add_resource(total_change, '/total_change')
 api.add_resource(kpi_change, '/kpi_change')
 
-weights = [25, 25, 25, 25]
+weights = [75, 0, 0, 25]
 
 extract_category(weights)
 

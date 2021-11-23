@@ -43,4 +43,4 @@ for df in l:
     df_scores.append(df.iloc[:,0:11])
 
 
-pd.concat(df_scores).to_csv("kpi/indicators_scores.csv",index=False)
+pd.concat(df_scores).to_csv("kpi/indicator_scores.csv",index=False)
